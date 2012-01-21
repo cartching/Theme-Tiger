@@ -1,0 +1,72 @@
+<!--/
+    CartChing Theme / Tiger
+    Copyright (c) CartChing, 2012 | http://cartching.com
+/-->
+
+<!-- #EXTENDS file="theme.html" -->
+
+<!-- #BLOCK for="page_title" --><title>{{store | html_encode}}</title><!-- #ENDBLOCK -->
+<!-- #BLOCK for="head_content" --><link rel="alternate" type="application/rss+xml" title="{{store | html_encode}}'s Blog" href="{{store.url}}/blog.rss" /><!-- #ENDBLOCK -->
+
+<!-- #BLOCK for="content_area" -->
+
+    <section class="posts hfeed group" id="main">
+
+		<!-- #var {{pagedarticles = blog.articles | paged(10) }} -->
+        <!-- # FOREACH { { post in blog.articles | pick(10) } } -->
+        <!-- #FOREACH {{ post in pagedarticles }} -->
+
+        <article class="post <!-- #IF {{post.category | html_encode}} -->category-{{post.category.slug}} <!-- #ENDIF -->post-{{post.slug}}">
+
+			<header class="post-{{post.slug}} hentry">
+       
+                <p class="meta"><span class="date">Posted on <time datetime="{{post.published}}" pubdate><span class="month">{{ post.published | date('MMM') }}</span> <span class="day">{{ post.published | date('dd') }}</span>, <span class="year">{{ post.published | date('yyyy') }}</span></time></span></p>
+
+                <h1 class="entry-title"><a href="{{post.url}}" rel="bookmark">{{post.title | html_encode}}</a></h1>
+                <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{post.editurl}}">(Edit)</a><!-- #ENDIF -->
+
+			</header>
+
+			<!-- #IF {{post.image}} -->
+            <figure><a href="{{post.url}}"><img class="post-image" src="{{post.image}}?w=690&h=290&crop=true" alt="{{post.excerpt | strip_html | html_encode}}" title="{{post.excerpt | strip_html | html_encode}}" /></a></figure>
+            <!-- #ENDIF -->
+
+            <section class="entry-content html"><p>{{ post.excerpt }}</p></section>
+
+            <footer>
+            	<ul>
+                    <!-- #IF {{post.category}} --><li class="category"><strong>Category</strong> <a href="{{post.category.url}}">{{post.category | html_encode}}</a></li><!-- #ENDIF -->
+                    <!-- #IF {{post.tags}} --><li class="tags"><strong>Tags</strong><!-- #FOREACH {{tag in post.tags}} --> <a href="{{tag.url}}">{{tag}}</a>, <!-- #NEXT --></li><!-- #ENDIF -->
+                    <li class="meta"><span class="author"><strong>Author</strong> <span class="vcard"><a class="url fn" rel="author" href="{{store.url}}">{{post.author | html_encode }}</a></span></span></li>
+                    <li class="social">
+                    	<strong>Social</strong>
+                        <div class="addthis_toolbox addthis_default_style" addthis:url="{{store.url}}{{post.url}}" addthis:title="{{post.title}}" addthis:description="{{post.excerpt}}">
+                        <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+                        <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+						<!-- <a class="addthis_button_tweet"></a> <a class="addthis_counter addthis_pill_style"></a> -->
+                        </div>
+                    </li>
+    			</ul>
+            </footer>
+
+        </article>
+		<!-- #NEXT -->
+
+
+        <!-- #IF {{pagedarticles.pages}} -->
+        <section class="paging blog bottom">
+        	<nav>
+            <!-- #IF {{pagedarticles.prevpage}} --><a href="{{pagedarticles.prevpage.url}}" class="page prev">« Previous</a><!-- #ENDIF -->
+            <!-- #IF {{pagedarticles.nextpage}} --><a href="{{pagedarticles.nextpage.url}}" class="page next">Next »</a><!-- #ENDIF -->
+            </nav>
+        </section>
+        <!-- #ENDIF -->
+
+    
+    </section>
+
+
+<!-- #ENDBLOCK -->
+
+<!-- #BLOCK for="aside_area" --><!-- #ENDBLOCK -->
+<!-- #BLOCK for="script_content" --><!-- #ENDBLOCK -->

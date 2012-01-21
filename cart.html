@@ -1,0 +1,198 @@
+<!--/
+    CartChing Theme / Tiger
+    Copyright (c) CartChing, {{now.year}} | http://cartching.com
+/-->
+
+<!-- #EXTENDS file="theme-shop.html" -->
+
+<!-- #BLOCK for="head_content" -->
+<meta name="robots" content="noindex, nofollow" />
+<!-- #ENDBLOCK -->
+
+
+<!-- #BLOCK for="content_area" -->
+
+	
+	<header role="page">
+    <!-- #IF {{cart.items}} -->
+
+		<h1>Cart <span class="amount">/ <span class="currency">{{store.currency_sign}}</span><span class="dollars">{{cart.totalprice | money_dollars}}</span><!-- #IF {{cart.totalprice | money_cents}} --><span class="cents">.{{cart.totalprice | money_cents}}</span><!-- #ENDIF --></span></h1>
+         
+        <ol class="progress checkout">
+            <li id="progress-cart" class="active">Your Cart <span>→</span></li>
+            <li id="progress-checkout"><a href="/checkout/" title="Shipping Details">Shipping</a> <span>→</span></li>
+            <li id="progress-payment"><a href="/payment/" title="Payment Details">Payment</a> <span>→</span></li>
+            <li id="progress-receipt"><span title="Receipt">Receipt</span></li>
+        </ol>
+
+    <!-- #ELSE -->
+
+        <h4>Doh!</h4>
+        <h1>Your Cart is empty!</h1>
+
+    <!-- #ENDIF -->
+	</header>
+
+
+
+    <!-- #IF {{cart.items}} -->
+
+	<p><a href="/shop/" class="continue-shopping">&#8249; Continue Shopping</a></p>
+
+      <form action="/cart/update" method="post">
+      <table class="cartitems">
+                <thead>
+                    <tr>
+                        <th class="" colspan="2">Item</th>
+                        <th class="price">Price</th>
+                        <th class="qty">Qty</th>
+                        <th class="remove"></th>
+                        <th class="money">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- #FOREACH {{cartitem in cart.items}} --> 
+                    <tr>
+                        <td class="image">
+                        
+	                        <!-- #IF {{cartitem.image}} -->
+                        	<div class="product-image">
+                            <a href="{{cartitem.url}}" title="{{cartitem.name | html_encode}}">
+                                <img src="{{cartitem.image}}?w=50&h=50&crop=true" alt="{{cartitem.name | html_encode}}" />
+                            </a>
+                            </div>
+                            <!-- #ENDIF -->
+                            
+                        </td>
+                        <td class="details">
+                            <strong><a href="{{cartitem.url}}">{{cartitem.name | html_encode}}</a></strong>
+                            <!-- #IF {{cartitem.hasvariation}} -->
+                            <br />{{cartitem.variation.name | html_encode}}
+                            <!-- #ENDIF -->
+                        </td>
+                        <td class="price">{{cartitem.price | money}}</td>
+                        <td class="qty">
+                            <input class="qty" type="number" size="4" name="quantity" value="{{cartitem.quantity}}" onfocus="this.select();" />
+                        </td>
+                        <td class="remove">
+                            <button type="button" name="cartitem" value="{{cartitem.id}}"  class="button remove" title="Remove - {{cartitem.name | html_encode}}">Remove</button>
+                        </td>
+                        <td class="money">{{cartitem.qtyprice | money}}</td>
+                    </tr>
+                    <!-- #NEXT -->
+                </tbody>
+                <tfoot>
+                
+                    <tr class="update">
+                        <td colspan="4">&nbsp;</td>
+                        <td colspan="2">
+                        
+                        <button type="submit" value="Update"  class="button update" title="Update">Update</button>
+                        
+                        </td>
+                    </tr>
+
+                    <tr class="subtotal">
+                      <td colspan="5"><strong>Subtotal</strong> <!-- #IF {{cart.taxesincluded}} -->(incl. tax)</strong><!-- #ELSE --><strong>(ex. tax)<!-- #ENDIF --></td>
+                      <td class="money">{{cart.subtotal | money}}</td>
+                    </tr>
+
+                    <!-- #IF {{cart.shippingrequired}} -->
+                    <!-- #IF {{cart.shippingaddress.country}} -->
+                    <!-- // show carrier and pricing -->
+
+                    <tr class="shipping">
+                      <td colspan="5"><small>Shipping with <strong>{{cart.shipping.carrier}}</strong>.</small> | Shipping/Handling</td>
+                      <td class="money">{{cart.shipping.cost | money}}</td>
+                    </tr>
+
+                    <!-- #ELSE -->
+                    <!-- // no shipping required -->
+
+                    <tr class="shipping">
+                      <td colspan="5"><small>Delivery - No Shipping Required.</small></td>
+                      <td class="money"></td>
+                    </tr>
+
+                    <!-- #ENDIF -->
+                    <!-- #ELSE -->
+                    <!-- #IF {{cart.shippingaddress.country | not}} -->
+
+                    <tr class="shipping">
+                      <td colspan="5"><small>Shipping to be added.</small></td>
+                      <td class="money"></td>
+                    </tr>
+
+                    <!-- #ENDIF -->
+                    <!-- #ENDIF -->                                        
+
+                    <!-- #IF {{cart.coupon}} -->
+                    <tr class="coupon">
+                      <td colspan="5"><em>{{cart.coupon.name}}</em> | Discount <strong>({{cart.discount.percentage}}%)</strong></td>
+                      <td class="money">{{cart.discount.amount | money}}</td>
+                    </tr>
+                    <!-- #ENDIF -->
+
+                    <tr class="total">
+                      <td colspan="5"><strong>Total</strong> <abbr class="currency" title="{{store.currency_name}}">{{store.currency}}</abbr></td>
+                      <td class="money">{{cart.totalprice | money}}</td>
+                    </tr>
+
+                    <!-- #IF {{cart.taxesincluded}} -->
+                    <tr class="tax">
+                      <td colspan="5">Includes Tax ({{cart.tax.percentage}}%)</td>
+                      <td class="money">{{cart.tax.amount | money}}</td>
+                    </tr>
+                    <!-- #ENDIF -->
+
+                    
+                </tfoot>
+            </table>
+            <!-- /#product-cartitems -->
+
+			<section class="actions cart">
+            	<a href="/checkout/" class="checkout">Checkout &raquo;</a>
+			</section>
+            
+        </form>
+
+
+    <!-- #ELSE -->
+
+        <h3><a href="/shop/">Continue shopping</a> or <a href="/contact/">contact us</a> for more information.</h3>
+        
+        <p><strong>Hint:</strong> If you see something you would like to add to your shopping cart when shopping, click the <strong>ADD TO CART</strong> button.</p>
+
+    <!-- #ENDIF -->
+
+
+<!-- #ENDBLOCK -->
+
+
+<!-- #BLOCK for="footer_social" --> <!-- #ENDBLOCK -->
+
+
+<!-- #BLOCK for="script_content" -->
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js?ver=3.1.3'></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+	
+		// add the remove crt item form to the body
+		var $form = $('<form action="/cart/update" style="display:none" method="post"><input id="removecartitem" name="cartitem" type="hidden" value="" /><input name="quantity" type="hidden" value="0" /></form>');
+		$('body').append($form);
+	
+		$('button.button.remove')
+			.show() // make the remove buttons visible, since we have javascript
+			.click(function(){
+				var $button = $(this);
+				$('#removecartitem', $form).val($button.val());
+				
+				var msg = $button.attr('title') || "You're about to remove this item!";
+
+				if (confirm(msg))
+					$form.submit();
+			});
+	});
+
+</script>
+<!-- #ENDBLOCK -->

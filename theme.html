@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <!--
+        CartChing Theme / Tiger
+        Copyright (c) CartChing, 2012 | http://cartching.com
+    -->
+    
+    <!-- #BLOCK name="page_title" --><title>{{page.title | html_encode}} | {{store | html_encode}}</title><!-- #ENDBLOCK -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="title" content="{{store | html_encode}}" />
+    <!-- #BLOCK name="page_keywords" --><!-- #IF {{page.keywords}} --><meta name="keywords" content="{{page.keywords | html_encode}}" /><!-- #ENDIF --><!-- #ENDBLOCK --> 
+    <!-- #BLOCK name="page_description" -->
+    <!-- #IF {{page.description}} -->
+    <!-- #var {{ pagedescription = page.description | strip_html | html_encode }} -->
+    <meta name="description" content="{{pagedescription}}" />
+    <meta property="og:description" content="{{pagedescription}}" />
+    <!-- #ENDIF -->
+    <!-- #ENDBLOCK -->    
+    <meta property="og:site_name" content="{{store | html_encode}}" />
+    <meta property="og:url" content="{{page.url}}" />
+    <meta property="og:title" content="{{page.title | html_encode}}" />
+    <!-- #BLOCK name="page_type" --><meta property="og:type" content="website" /><!-- #ENDBLOCK -->
+    <!-- #BLOCK name="page_image" --><!-- #ENDBLOCK -->
+    
+    <link rel="canonical" href="{{page.url}}" />
+    <link rel="home" title="home" href="{{store.url}}" />
+    
+    <link rel="stylesheet" media="all" href="/themes/tiger/files/theme.css" />
+    <link rel="stylesheet" media="all" href="/files/custom.css" />
+    <!--[if IE]><link rel="stylesheet" media="screen" href="{{theme.files}}/ie.css" /><![endif]-->
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    
+    <script src="http://cachedcommons.org/cache/modernizr/1.5.0/javascripts/modernizr-min.js"></script>
+    <script src="http://cachedcommons.org/cache/html5-enabled/1.0.0/javascripts/html5-enabled-min.js"></script>
+    <script src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e8387415e31734c"></script>
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script type="text/javascript" language="javascript" src="/themes/tiger/files/jquery.sticky.js"></script>
+    <script type="text/javascript" language="javascript" src="/themes/tiger/files/main.js"></script>
+    
+    <!-- #BLOCK name="head_content" --><!-- #ENDBLOCK -->
+    
+    <!-- #IF {{snippets.head-content}} -->
+    {{snippets.head-content}}
+    <!-- #ELSE -->
+        <!-- // Snippet: Head Content
+            Example -
+            <meta name="google-site-verification" content="" />
+        -->
+    <!-- #ENDIF -->
+
+</head>
+
+
+<!-- #BLOCK name="body_tag" -->    
+<body id="{{page.id}}" class="{{page.id}} {{page.template}}">
+<!-- #ENDBLOCK -->
+
+
+<div class="wrap">
+
+
+    <!-- #IF {{page.hasmessage}} -->
+    <section class="pagemsg" id="pagemsg">
+        <div class="msg {{page.messagetype|lowercase}}">
+    
+            <!-- #IF {{page.hasmessagetitle}} --><h3>{{page.messagetitle}}</h3><!-- #ENDIF -->
+            <!-- #IF {{page.hasmessagedetails}} --><p>{{page.messagedetails}}</p><!-- #ENDIF -->
+
+            <div class="buttons">
+                <a href="#" class="close" onClick="$('#pagemsg').fadeOut();" title="Click to Close" rel="nofollow">Close</a>
+            </div>
+    
+        </div>
+    </section>
+    <!-- #ENDIF -->    
+
+
+    <header class="header" role="masthead">
+        <div class="container">
+
+            <h1 class="logo" title="{{store | html_encode}}"><a href="{{store.url}}">{{store | html_encode}}</a></h1>
+
+        <div class="clearfix"></div>
+        </div>
+    </header>
+
+
+ 
+    <nav role="navigation" class="navigation">
+        <div class="container">
+
+            <ul>
+                <!-- #FOREACH {{link in links.nav}} -->
+                <li class="nav-{{link.slug}}"><a href="{{link.url}}" title="{{link.name | html_encode}}">{{link.name | html_encode}}</a></li>
+                <!-- #NEXT -->
+                <li class="cart"><a href="/cart/" rel="nofollow">Your Cart <!-- #IF {{cart.items.count}} -->{{cart.totalprice | money}} ({{cart.items.count}} items)<!-- #ELSE -->(0)<!-- #ENDIF --></a></li>
+            </ul>
+
+        <div class="clearfix"></div>
+        </div>
+    </nav>
+
+
+	<!-- #BLOCK name="content-callout_area" --><!-- #ENDBLOCK -->
+
+
+    <section id="content" role="content" class="content">
+        <div class="container">
+         
+        <div class="has-aside">
+        <!-- #BLOCK name="content_area" --><!-- #ENDBLOCK -->
+		</div>
+
+		<!-- ASIDE -->
+        <aside role="content">
+
+			<!-- #BLOCK name="aside_area" -->
+
+                <!-- #IF {{products.featured}} -->                
+                <section class="products">
+                
+                    <h3>Feature Products</h3>
+                    <ul>
+                    <!-- #FOREACH {{ product in products.featured | shuffle | pick(6) }} -->
+                        <!-- #IF {{product.image}} -->
+                        <li><a href="{{product.url}}" rel="product"><img src="{{product.image}}?w=46&h=46&crop=true" alt="{{product.name | html_encode}} | {{product.excerpt | html_encode}}" class="photo" /></a></li>
+                        <!-- #ENDIF -->
+                    <!--#NEXT -->
+                    </ul>
+                    <div class="clearfix"></div>
+    
+                </section>
+                <!-- #ENDIF -->
+    
+                <!--
+                <section class="blog-categories">
+    
+                    <h3>Blog Categories</h3>
+                    <ul>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                    </ul>
+    
+                    <h4>Heading H4</h4>
+                    
+                </section>
+                -->
+    
+                <!-- #IF {{snippets.blog-aside}} -->
+                <section class="links social">
+                    {{snippets.blog-aside}}
+                </section>
+                <!-- #ENDIF -->
+    
+                <div class="clearfix"></div>
+            </aside>
+
+		<!-- #ENDBLOCK -->
+
+        <div class="clearfix"></div>
+        </div>
+    </section>    
+
+
+    <footer class="footer" role="siteinfo">
+        <div class="container">
+            
+            <!-- #IF {{snippets.footer-navigation}} -->
+            <nav role="footer-nav" class="footer-nav">
+                {{snippets.footer-navigation}}
+            </nav>
+            <!-- #ELSE -->
+            <!-- // Custom Snippet: Footer Navigation
+                <ul>
+                    <li class="nav-"><a href="#">Link</a></li>
+                </ul>
+            -->
+            <!-- #ENDIF -->
+    
+            <!-- #BLOCK name="footer_social" -->
+            <div class="social addthis">
+                <div class="addthis_toolbox addthis_default_style" addthis:url="{{page.url}}" addthis:title="{{page.title | html_encode}}">
+                <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+                <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+                <a class="addthis_counter addthis_pill_style"></a>
+                </div>
+            </div>
+            <!-- #ENDBLOCK -->
+    
+            <p class="cite"><cite><abbr title="Copyright">&#169;</abbr> {{now.year}} <a href="{{store.url}}">{{store | html_encode}}</a>.</cite> <br /> All Rights Reserved. <!-- #IF {{cart.items.count}} --><abbr class="currency" title="{{store.currency_name}}">{{store.currency}}</abbr></p><!-- #ENDIF -->
+
+        <div class="clearfix"></div>
+		</div>
+    </footer>
+
+
+
+</div>
+
+<!-- #BLOCK name="script_content" --><!-- #ENDBLOCK -->
+
+<script src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e8387415e31734c"></script>
+
+<!-- #IF {{snippets.script-content}} -->
+{{snippets.script-content}}
+<!-- #ELSE -->
+<!-- // Snippet: Script Content
+        Example -
+        Google Anayltics Code <script>...</script>
+-->
+<!-- #ENDIF -->
+
+</body>
+</html>

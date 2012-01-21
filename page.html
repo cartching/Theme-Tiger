@@ -1,0 +1,25 @@
+<!--/
+    CartChing Theme / Tiger
+    Copyright (c) CartChing, 2012 | http://cartching.com
+/-->
+
+<!-- #EXTENDS file="theme.html" -->
+
+<!-- #BLOCK for="page_title" --><!-- #ENDBLOCK -->
+<!-- #BLOCK for="head_content" --><!-- #ENDBLOCK -->
+
+<!-- #BLOCK for="content_area" -->
+	
+	<header role="page">
+
+        <h1>{{page.title}}</h1>
+         <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{page.editurl}}">(Edit)</a><!-- #ENDIF -->
+         
+	</header>
+
+	<section class="customcontent html">{{page.content}}</section>
+
+<!-- #ENDBLOCK -->
+
+<!-- #BLOCK for="aside_area" --><!-- #ENDBLOCK -->
+<!-- #BLOCK for="script_content" --><!-- #ENDBLOCK -->

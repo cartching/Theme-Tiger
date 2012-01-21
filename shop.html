@@ -1,0 +1,182 @@
+<!--/
+    CartChing Theme / Tiger
+    Copyright (c) CartChing, 2012 | http://cartching.com
+/-->
+
+<!-- #EXTENDS file="theme-shop.html" -->
+
+
+<!-- #BLOCK for="page_title" -->
+<title>{{store | html_encode}}</title>    
+<!-- #ENDBLOCK -->
+
+
+<!-- #BLOCK for="head_content" --><!-- #ENDBLOCK -->
+
+
+
+<!-- #BLOCK for="content-callout_area" -->
+
+        <!-- #IF {{products.featured}} -->
+    	<section id="callout" role="callout" class="callout feature">
+
+            <div class="concrete">
+            <div class="container">
+        
+                <section class="product">
+
+                    <!-- #FOREACH {{ product in products.featured | shuffle | pick(1) }} -->
+
+                    <article class="hproduct product {{product.slug}}">
+                                
+                        <header>
+                            <h1><a href="{{product.url}}">{{product.name | html_encode}}</a></h1>
+                            <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{product.editurl}}">(Edit)</a><!-- #ENDIF -->
+                        </header>
+            
+                        <!-- #IF {{product.image}} -->
+                        <figure><a href="{{product.url}}" rel="product"><img src="{{product.image}}?w=500&h=340&crop=true" alt="{{product.excerpt | html_encode}}" class="photo" /></a></figure>
+                        <!-- #ENDIF -->
+            
+                        <section>
+            
+                            <p class="price">
+                                <!-- #IF {{product.onsale}} -->
+                                <del><span class="currency">{{store.currency_sign}}</span><span class="dollars">{{product.fullprice | money_dollars}}</span><!-- #IF {{product.fullprice | money_cents}} --><span class="cents">.{{product.fullprice | money_cents}}</span><!-- #ENDIF --></del>
+                                <!-- #ENDIF -->
+                                <span class="currency">{{store.currency_sign}}</span><span class="dollars">{{product.price | money_dollars}}</span><!-- #IF {{product.price | money_cents}} --><span class="cents">.{{product.price | money_cents}}</span><!-- #ENDIF -->
+                            </p>
+                            
+                            <p class="excerpt">{{product.excerpt | html_encode}}</p>
+            
+                            <p><a class="button" href="{{product.url}}">View details »</a></p>                        
+               
+                        </section>
+    
+	                    <div class="clearfix"></div>                        
+                    </article>
+                    <!-- #NEXT -->        
+
+		        </section>
+
+	        </div>
+	        </div>
+            
+        </section>
+        <!-- #ELSE -->
+        <!-- #ENDIF -->
+
+
+<!-- #ENDBLOCK -->
+
+
+
+
+
+<!-- #BLOCK for="content_area" -->
+
+
+    <div class="has-aside">
+    
+        <section class="products featured">
+        
+            <h3>Feature Products</h3>
+    
+            <!-- #IF {{products.featured}} -->
+    
+            <!-- # FOREACH { { product in products.all | shuffle | pick(6) } } -->
+            <!-- #FOREACH {{ product in products.featured | shuffle | pick(6) }} -->
+            
+            <article class="hproduct product {{product.slug}}">
+            
+                <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{product.editurl}}">(Edit)</a><!-- #ENDIF -->
+                
+                <!-- #IF {{product.image}} -->
+                <figure>
+                <a href="{{product.url}}" rel="product"><img src="{{product.image}}?w=200&h=215&crop=true" alt="{{product.excerpt | html_encode}}" class="photo" /></a>
+                </figure>
+                <!-- #ENDIF -->
+                
+                <header><h1><a href="{{product.url}}">{{product.name | html_encode}}</a></h1></header>
+    
+                <section>
+    
+                    <p class="price">
+                        <!-- #IF {{product.onsale}} -->
+                        <del><span class="currency">{{store.currency_sign}}</span><span class="dollars">{{product.fullprice | money_dollars}}</span><!-- #IF {{product.fullprice | money_cents}} --><span class="cents">.{{product.fullprice | money_cents}}</span><!-- #ENDIF --></del>
+                        <!-- #ENDIF -->
+                        <span class="currency">{{store.currency_sign}}</span><span class="dollars">{{product.price | money_dollars}}</span><!-- #IF {{product.price | money_cents}} --><span class="cents">.{{product.price | money_cents}}</span><!-- #ENDIF -->
+                    </p>
+                    
+                    <p class="excerpt"><a href="{{product.url}}">View details »</a></p>
+        
+                </section>
+                
+            </article>
+            <!--#NEXT -->
+    
+            <!-- #ELSE -->
+            
+                <h3>No Featured Products yet!</h3>
+            
+            <!-- #ENDIF -->
+    
+            <div class="clearfix"></div>
+    
+        </section>
+
+    </div>
+
+
+
+    <!-- ASIDE -->
+    <aside role="content" class="aside">
+
+        <h3>Shop</h3>
+
+        <!-- #IF {{categories.all}} -->
+        <ul class="categories">
+        <!-- #FOREACH {{navcategory in categories.all }} -->
+        
+        <!-- #IF {{navcategory.featured | not}} -->
+        
+        <!-- #ENDIF -->
+        
+                <!-- #IF {{navcategory.subcategories}} -->
+            
+                <li id="subnavcategory-{{navcategory.slug}}" class="subnavcategory">          
+                  <h4><a title="{{navcategory.name | html_encode}}" href="{{navcategory.url}}">{{navcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></h4>
+                  <ul>
+                  <!-- #FOREACH {{subnavcategory in navcategory.subcategories}} -->
+                    <li id="subnavcategory-{{subnavcategory.slug}}"><a title="{{subnavcategory.name | html_encode}}" href="{{subnavcategory.url}}">{{subnavcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></li>
+                  <!-- #NEXT -->
+                  </ul>
+                </li>         
+            
+                <!-- #ELSE -->
+            
+                    <!-- #IF {{categories.featured}} -->
+        
+                    <li id="navcategory-{{navcategory.slug}}" class="navcategory featured"><a title="{{navcategory.name | html_encode}}" href="{{navcategory.url}}">{{navcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></li>
+                    
+                    <!-- #ELSE -->
+                    
+                    <li id="navcategory-{{navcategory.slug}}" class="navcategory"><a title="{{navcategory.name | html_encode}}" href="{{navcategory.url}}">{{navcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></li>
+        
+                    <!-- #ENDIF -->
+        
+            
+                <!-- #ENDIF -->
+            
+            
+        
+        <!-- #NEXT -->
+        </ul>
+        <!-- #ENDIF -->
+
+    <div class="clearfix"></div>
+    </aside>
+
+
+
+<!-- #ENDBLOCK -->

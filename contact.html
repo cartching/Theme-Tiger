@@ -1,0 +1,72 @@
+<!--/
+    CartChing Theme / Tiger
+    Copyright (c) CartChing, {{now.year}} | http://cartching.com
+/-->
+
+<!-- #EXTENDS file="theme.html" -->
+
+<!-- #BLOCK for="page_title" --><!-- #ENDBLOCK -->
+<!-- #BLOCK for="head_content" --><!-- #ENDBLOCK -->
+
+<!-- #BLOCK for="content_area" -->
+
+	<header role="page">
+        <h1>Contact</h1>
+	</header>
+
+    <!-- #IF {{snippets.contact-page-info}} -->
+        <div class="contact-info vcard">
+          {{snippets.contact-page-info}}
+        </div>
+    <!-- #ELSE -->
+    	<!--
+        // Snippet - Contact Page info
+
+        <div class="contact-info vcard">
+            <h3 class="fn org">{{store}}</h3>
+            <ul>
+                <li class="url"><a href="{{store.url}}">{{store.url}}</a></li>
+            </ul>
+        </div>
+        -->
+    <!-- #ENDIF -->
+
+
+	<div class="contact-form">
+    <form id="form-contact" name="form-contact" action="/contact" method="post" validate>
+    
+        <fieldset>
+            <legend>Send us an email</legend>
+            
+            <p>Please submit the form and we'll get back to you as soon as we can.</p>
+
+            <div>
+                <label>Name</label>
+                <input type="text" name="name" class="text lrg required" title="Your Full Name" placeholder="Your Full Name" autofocus required />
+            </div>
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" class="text lrg required" title="Your Email Address" placeholder="Your Email Address" required />
+            </div>
+            <div>
+                <label>Phone</label>
+                <input type="text" name="phone" class="text med" title="Your Phone Number" placeholder="Your Phone Number" />
+            </div>
+            <div>
+                <label>Comments</label>
+                <textarea name="comments" class="textarea xlrg" title="Add your Comments"></textarea>
+            </div>
+            <div class="submit">
+                <button type="submit" class="button submit" title="Send your Email">Send</button>
+            </div>
+
+        </fieldset>
+
+    </form>
+    </div>
+
+
+<!-- #ENDBLOCK -->
+
+<!-- #BLOCK for="aside_area" --><!-- #ENDBLOCK -->
+<!-- #BLOCK for="script_content" --><!-- #ENDBLOCK -->

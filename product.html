@@ -1,0 +1,315 @@
+<!--/
+    CartChing Theme / Tiger
+    Copyright (c) CartChing, 2012 | http://cartching.com
+/-->
+
+<!-- #EXTENDS file="theme-shop.html" -->
+
+<!-- #BLOCK for="page_title" --><title>{{product.name | html_encode}} / {{product.price | money}} {{store.currency}}</title><!-- #ENDBLOCK -->
+<!-- #BLOCK for="page_description" -->
+<!-- #IF {{product.excerpt}} -->
+    <!-- #var {{ pagedescription = product.excerpt | strip_html | html_encode }} -->
+    <meta name="description" content="{{pagedescription}}" />
+    <meta property="og:description" content="{{pagedescription}}" />
+<!-- #ELSE -->
+    <!-- #IF {{page.description}} -->
+    <!-- #var {{ pagedescription = page.description | strip_html | html_encode }} -->
+    <meta name="description" content="{{pagedescription}}" />
+    <meta property="og:description" content="{{pagedescription}}" />
+    <!-- #ENDIF -->
+<!-- #ENDIF -->
+<!-- #ENDBLOCK -->
+<!-- #BLOCK for="page_image" --><!-- #IF {{product.image}} --><meta property="og:image" content="{{product.image}}?w=200&h=320&crop=false" /><!-- #ENDIF --><!-- #ENDBLOCK -->
+<!-- #BLOCK for="page_type" --><meta property="og:type" content="product" /><!-- #ENDBLOCK -->
+<!-- #BLOCK for="head_content" --><link rel="stylesheet" type="text/css" href="http://static.store-cdn.com/themes/library/jquery/shadowbox/shadowbox.css" /><!-- #ENDBLOCK -->
+
+
+<!-- #BLOCK for="content_area" -->
+
+    <article class="product">
+
+
+        <header role="page">
+            <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{product.editurl}}">(Edit)</a><!-- #ENDIF -->
+            <h1 class="product-title">{{product.name | html_encode}}</h1>
+        </header>
+
+
+        <!-- #IF {{product.image}} -->
+        <section class="product-images">
+
+            <figure class="product-image">
+                <img class="photo" src="{{product.image}}?w=280&h=300&crop=false" alt="{{product.name | html_encode}} / {{product.price | money}}" />
+            </figure>
+
+            <ul class="product-image-thumbnails" id="gallery">
+                <!-- #FOREACH {{image in product.images}} -->
+                <li><a title="{{product.name | html_encode}} - {{product.price | money}}" href="{{image.url}}?w=1024&h=1024&crop=false"><img src="{{image.url}}?w=50&h=50&crop=true" alt="{{image.title | html_encode}}" class="photo" /></a></li>
+                <!-- #NEXT -->
+            </ul>
+
+        </section>
+        <!-- #ENDIF -->
+        
+        
+        <section class="product-details">
+        
+            <p class="price">
+            
+                <span class="retail">
+                    <span class="currency"><sup>{{store.currency_sign}}</sup></span><span class="dollars">{{product.price | money_dollars}}</span><!-- #IF {{product.price | money_cents}} --><span class="cents">.{{product.price | money_cents}}</span><!-- #ENDIF -->
+                </span>
+
+                <!-- #IF {{product.onsale}} -->
+                <span class="sale">was <del><span class="currency"><sup>{{store.currency_sign}}</sup></span><span class="dollars">{{product.fullprice | money_dollars}}</span>
+                    <!-- #IF {{product.fullprice | money_cents}} --><span class="cents">.{{product.fullprice | money_cents}}</span><!-- #ENDIF -->
+                </del></span>
+                <!-- #ENDIF -->
+        
+                <!-- #IF {{ cart.taxesincluded }} -->
+                <span class="product-tax"><span class="inctax">incl. tax</span></span>
+                <!-- #ENDIF -->
+            
+            </p>
+        
+        
+        <!-- #IF {{product.soldout}} -->        
+        
+                <!-- // SINGLE VARIAION ONLY #################################### -->
+                <!-- #IF {{ product.sku }} -->
+                <p><span class="identifier sku"><label class="type"><abbr title="Stock-keeping unit">sku:</abbr></label> <span class="value">{{product.sku | html_encode}}</span></span></p>
+                <!-- #ENDIF -->
+                
+                <p class="product-soldout">Sorry, product is sold out.</p>
+        
+        <!-- #ELSE -->
+        
+        
+            <!-- #IF {{product.disabled}} -->
+        
+                <div class="product-disabled">
+                <!-- #IF {{snippets.product-disabled}} -->
+                    {{snippets.product-disabled}}
+                <!-- #ELSE -->
+                    <h5>This product is not for purchase.</h5>
+                    <p>Please <a href="/contact/">email</a> us if you're interested in this product.</p>
+                <!-- #ENDIF -->
+                </div>
+        
+        
+                    <!-- #IF {{product.variations}} -->
+        
+                        <!-- #FOREACH {{ variation in product.variations }} -->
+                        <p class="variation">
+                            
+                            <!-- // TO FIX ################################################## -->
+                            <!-- <strong>{{variation}}:</strong> -->
+                            <!-- // TO FIX ################################################## -->
+        
+                            <strong>Option:</strong> <!-- #FOREACH {{ option in variation.options }} -->{{option | html_encode}}, <!-- #NEXT -->
+                            
+                        </p>
+                        <!-- #NEXT -->
+            
+                    <!-- #ELSEIF {{product.variation}} -->
+        
+                        <ul class="product-variation">
+                            <!-- #FOREACH {{ option in product.variation.options }} -->
+                            <li class="variation option {{ option.soldout | if('soldout','instock') }}">
+                            
+                                <strong>{{option | html_encode}}</strong>
+        
+                                <!-- #IF {{ option.soldout }} -->
+        
+                                <span class="stocklevel soldout">Sold Out</span>
+        
+                                <!-- #ELSE -->
+        
+                                    <!-- # IF { { store.loggedin } } -->
+                                        <!-- #IF {{option.stocklevel}} -->
+                                        <span class="stocklevel"><span class="stockqty">{{option.stocklevel}}</span> <span class="stockdescription">Instock</span></span>
+                                        <!-- #ENDIF -->
+                                    <!-- # ENDIF -->
+                                
+                                <!-- #ENDIF -->
+        
+                                <!-- #IF {{ option.sku }} -->
+                                <span class="identifier sku"><abbr title="Stock-keeping unit">sku:</abbr> <span class="value">{{option.sku | html_encode}}</span></span>
+                                <!-- #ENDIF -->
+                                
+                            </li>
+                            <!-- #NEXT -->
+                        </ul>
+        
+        
+                    <!-- #ENDIF -->
+        
+            <!-- #ELSE -->
+        
+        
+                <!-- begin product-add -->
+                <div class="product-add">		
+                <form action="/cart/add" method="post" id="form-product">
+                <input type="hidden" name="returnurl" value="{{page.url}}" />
+                <input type="hidden" name="product" value="{{product.id}}" />
+        
+                    <fieldset>
+                        <legend>Add to Cart</legend>
+            
+                        <ul class="product-variation">
+        
+                        <!-- #IF {{product.variations}} -->
+                        <!-- // COMBINATION OF VARIAIONS #################################### -->
+                        
+                                        
+                            <!-- #FOREACH {{variation in product.variations}} -->
+                            <li class="variations">
+                            
+                                <!-- // TO FIX ################################################## -->
+                                <!-- <label>{{variation}}</label> -->
+                                <!-- // TO FIX ################################################## -->
+                                
+                                <select name="variation" class="select">
+                                    <!-- #FOREACH {{option in variation.options}} -->
+                                       <option value="{{option.id}}">{{option | html_encode}}</option>
+                                    <!-- #NEXT -->
+                                </select>
+                                
+                            </li>
+                            <!-- #NEXT -->                      
+                            
+                        <!-- #ELSEIF {{product.variation}} -->							
+                        <!-- // MANY VARIAIONS #################################### -->
+                            
+        
+                            <!-- #FOREACH {{option in product.variation.options}} -->
+                            <li class="variation option {{ option.soldout | if('soldout','instock') }}">
+        
+                                <label>
+                                <input name="variation" type="radio" value="{{option.id}}" class="radio" {{ option.soldout | if ('disabled','') }} />
+                                <span>{{option | html_encode}}</span>
+                                </label>                                    
+        
+                                <!-- #IF {{ option.soldout }} -->
+        
+                                    <span class="stocklevel soldout">Sold Out</span>
+        
+                                <!-- #ELSE -->
+        
+                                    <!-- #IF {{ option.stocklevel }} -->
+                                    <span class="stocklevel"><span class="stockqty">{{option.stocklevel}}</span> <span class="stockdescription">Instock</span> <!-- #IF {{ store.loggedin }} --><small>({{option.stocklevel}})</small><!-- #ENDIF --></span>
+                                    <!-- #ENDIF -->
+                                
+                                <!-- #ENDIF -->
+        
+        
+                                <!-- #IF {{ option.sku }} -->
+                                <span class="identifier sku"><abbr title="Stock-keeping unit">sku:</abbr> <span class="value">{{option.sku | html_encode}}</span></span>
+                                <!-- #ENDIF -->
+        
+                            </li>
+                            <!-- #NEXT -->
+        
+        
+                        <!-- #ELSE -->
+                        <!-- // SINGLE VARIAION ONLY #################################### -->
+        
+                            <li class="variation option single">
+        
+        
+                                <!-- // TO FIX ################################################## -->
+                                <!--
+                                <label>{{variation}}</label> <span class="stocklevel">{{variation.stocklevel}} <em>Instock</em></span>
+                                <span class="identifier sku"><abbr title="Stock-keeping unit">sku:</abbr> <span class="value">{{variation.sku | html_encode}}</span></span>
+                                -->
+                                <!-- // TO FIX ################################################## -->
+                                
+                                
+                                <span class="stocklevel"><span class="stockqty">{{product.stocklevel}}</span> <span class="stockdescription">Instock</span></span>
+                                
+                                <!-- #IF {{ product.sku }} -->
+                                <span class="identifier sku"><abbr title="Stock-keeping unit">sku:</abbr> <span class="value">{{product.sku | html_encode}}</span></span>
+                                <!-- #ENDIF -->
+                            
+                            </li>
+                                
+                        <!-- #ENDIF -->
+                            
+                            <li class="quantity">
+                                <label><abbr title="Quantity">Qty</abbr></label>
+                                
+                                <!--
+                                <input id="quantity" name="quantity" type="text" value="1" maxlength="4" class="text" title="Quantity" />
+                                -->
+        
+                                <input class="text number" id="quantity" name="quantity" title="Quantity" type="number" autofocus
+                                min="0"
+                                max="10"
+                                value="1">
+                                
+                                
+                                
+                            </li>
+                            
+                            <li class="buttons">
+                                <button type="submit" id="addtocart" class="button addtocart" title="Add To Cart">Add To Cart</button>
+        
+                                <!-- #IF {{cart.items.count}} -->
+                                <a href="/cart/" class="viewcart" title="View your Shopping Cart">View Cart</a>
+                                <!-- #ENDIF -->
+                            </li>
+            
+                        </ul>
+            
+                    </fieldset>
+                    </form>
+                    </div>
+                    <!-- end product-add -->
+        
+        
+            <!-- #ENDIF -->
+        
+        
+        <!-- #ENDIF -->
+        
+        <!-- Form -->                
+        </section>
+        
+
+        <!-- #IF {{product.description}} -->
+        <section class="product-description html">{{product.description}}</section>
+        <!-- #ENDIF -->    
+
+        <!-- Product Reviews -->
+        
+        <!-- Product Featured -->    
+
+
+    </article>
+
+<!-- #ENDBLOCK -->
+
+
+
+<!-- #BLOCK for="script_content" -->
+<script src="http://static.store-cdn.com/themes/library/jquery/shadowbox/shadowbox.js"></script>
+<script type="text/javascript">
+
+// Shadowbox Lightbox
+Shadowbox.init();
+
+$(function() {
+	
+	// Change Stock Value to Text Description
+	$(".stockqty").stockify();
+
+	$("#gallery li a").shadowbox({
+		overlayOpacity:	0.9,
+		gallery:        "#gallery a",
+		continuous:     true
+		// counterType:    "skip"
+	});
+
+});
+</script>
+<!-- #ENDBLOCK -->

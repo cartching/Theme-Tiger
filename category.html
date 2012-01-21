@@ -1,0 +1,142 @@
+<!--/
+    CartChing Theme / Tiger
+    Copyright (c) CartChing, 2012 | http://cartching.com
+/-->
+
+<!-- #EXTENDS file="theme-shop.html" -->
+
+<!-- #BLOCK for="page_title" --><!-- #ENDBLOCK -->
+<!-- #BLOCK for="page_description" -->
+<!-- #IF {{category.excerpt}} -->
+    <!-- #var {{ pagedescription = category.excerpt | strip_html | html_encode }} -->
+    <meta name="description" content="{{pagedescription}}" />
+    <meta property="og:description" content="{{pagedescription}}" />
+<!-- #ELSE -->
+    <!-- #IF {{page.description}} -->
+    <!-- #var {{ pagedescription = page.description | strip_html | html_encode }} -->
+    <meta name="description" content="{{pagedescription}}" />
+    <meta property="og:description" content="{{pagedescription}}" />
+    <!-- #ENDIF -->
+<!-- #ENDIF -->
+<!-- #ENDBLOCK -->
+<!-- #BLOCK for="page_image" --><!-- #ENDBLOCK -->
+<!-- #BLOCK for="page_type" --><meta property="og:type" content="product" /><!-- #ENDBLOCK -->
+<!-- #BLOCK for="head_content" --><!-- #ENDBLOCK -->
+
+
+<!-- #BLOCK for="content_area" -->
+
+    <div class="has-aside">
+    
+        <header role="page">
+    
+            <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{category.editurl}}">(Edit)</a><!-- #ENDIF -->
+    
+            <h1>{{category.name | html_encode}}</h1>
+    
+            <!-- #IF {{category.description}} -->
+            <section class="category-description html">{{category.description}}</section>
+            <!-- #ENDIF -->
+    
+        </header>
+    
+    
+    <!-- #IF {{category.products}} -->
+    <!-- #var {{ pagedProducts = category.products | paged(12) }} -->
+    
+    
+        <section class="products">
+    
+    
+            <!-- #FOREACH {{product in pagedProducts }} -->
+            <article class="hproduct product {{product.slug}}">
+            
+                <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{product.editurl}}">(Edit)</a><!-- #ENDIF -->
+                
+                <!-- #IF {{product.image}} -->
+                <figure>
+                	<a href="{{product.url}}" rel="product"><img src="{{product.image}}?w=200&h=215&crop=true" alt="{{product.excerpt | html_encode}}" class="photo" /></a>
+                </figure>
+                <!-- #ENDIF -->
+                            
+                <header>
+                	<h1><a href="{{product.url}}">{{product.name | html_encode}}</a></h1>
+                </header>
+    
+                <section>
+                    <p class="price">
+                        <!-- #IF {{product.onsale}} -->
+                        <del><span class="currency">{{store.currency_sign}}</span><span class="dollars">{{product.fullprice | money_dollars}}</span><!-- #IF {{product.fullprice | money_cents}} --><span class="cents">.{{product.fullprice | money_cents}}</span><!-- #ENDIF --></del>
+                        <!-- #ENDIF -->
+                        <span class="currency">{{store.currency_sign}}</span><span class="dollars">{{product.price | money_dollars}}</span><!-- #IF {{product.price | money_cents}} --><span class="cents">.{{product.price | money_cents}}</span><!-- #ENDIF -->
+                    </p>
+                    <p class="excerpt"><a href="{{product.url}}">View details »</a></p>
+                </section>
+    
+            </article>
+            <!--#NEXT -->
+    
+            <div class="clear"></div>
+    
+ 
+            <!-- #IF {{pagedproducts.pages}} -->
+            <section class="paging category bottom">
+                <nav>
+                {{ pagedProducts | pager }}
+                </nav>
+            </section>
+            <!-- #ENDIF -->
+        
+        </section>
+
+	<!-- #ELSE -->        
+    
+        <h2>There are no items for <strong>{{category.name | html_encode}}</strong></h2>
+        <p>However you might find something else your looking for on our store.</p>
+        <p><a href="{{store.url}}" class="continue" title="Continue shopping">Continue shopping</a></p>                 
+
+	<!-- #ENDIF -->
+
+
+    </div>
+
+
+    <aside role="content">
+
+        <h3>Shop</h3>
+
+        <!-- #IF {{categories.all}} -->
+        <ul class="categories">
+        <!-- #FOREACH {{navcategory in categories.all }} -->
+        
+        <!-- #IF {{navcategory.featured | not}} -->
+            <!-- #IF {{navcategory.subcategories}} -->
+        
+            <li id="subnavcategory-{{navcategory.slug}}" class="subnavcategory">          
+              <h4><a title="{{navcategory.name | html_encode}}" href="{{navcategory.url}}">{{navcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></h4>
+              <ul>
+              <!-- #FOREACH {{subnavcategory in navcategory.subcategories}} -->
+                <li id="subnavcategory-{{subnavcategory.slug}}"><a title="{{subnavcategory.name | html_encode}}" href="{{subnavcategory.url}}">{{subnavcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></li>
+              <!-- #NEXT -->
+              </ul>
+            </li>         
+        
+            <!-- #ELSE -->
+        
+            <li id="navcategory-{{navcategory.slug}}" class="navcategory"><a title="{{navcategory.name | html_encode}}" href="{{navcategory.url}}">{{navcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></li>  
+        
+            <!-- #ENDIF -->
+        <!-- #ENDIF -->
+        
+        <!-- #NEXT -->
+        </ul>
+        <!-- #ENDIF -->
+
+    <div class="clearfix"></div>
+    </aside>
+
+
+
+<!-- #ENDBLOCK -->
+
+<!-- #BLOCK for="script_content" --><!-- #ENDBLOCK -->
