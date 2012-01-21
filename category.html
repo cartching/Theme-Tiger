@@ -101,7 +101,7 @@
     </div>
 
 
-    <aside role="content">
+    <aside role="content" class="aside">
 
         <h3>Shop</h3>
 
@@ -110,23 +110,36 @@
         <!-- #FOREACH {{navcategory in categories.all }} -->
         
         <!-- #IF {{navcategory.featured | not}} -->
-            <!-- #IF {{navcategory.subcategories}} -->
         
-            <li id="subnavcategory-{{navcategory.slug}}" class="subnavcategory">          
-              <h4><a title="{{navcategory.name | html_encode}}" href="{{navcategory.url}}">{{navcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></h4>
-              <ul>
-              <!-- #FOREACH {{subnavcategory in navcategory.subcategories}} -->
-                <li id="subnavcategory-{{subnavcategory.slug}}"><a title="{{subnavcategory.name | html_encode}}" href="{{subnavcategory.url}}">{{subnavcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></li>
-              <!-- #NEXT -->
-              </ul>
-            </li>         
-        
-            <!-- #ELSE -->
-        
-            <li id="navcategory-{{navcategory.slug}}" class="navcategory"><a title="{{navcategory.name | html_encode}}" href="{{navcategory.url}}">{{navcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></li>  
-        
-            <!-- #ENDIF -->
         <!-- #ENDIF -->
+        
+                <!-- #IF {{navcategory.subcategories}} -->
+            
+                <li id="subnavcategory-{{navcategory.slug}}" class="subnavcategory">          
+                  <h4><a title="{{navcategory.name | html_encode}}" href="{{navcategory.url}}">{{navcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></h4>
+                  <ul>
+                  <!-- #FOREACH {{subnavcategory in navcategory.subcategories}} -->
+                    <li id="subnavcategory-{{subnavcategory.slug}}"><a title="{{subnavcategory.name | html_encode}}" href="{{subnavcategory.url}}">{{subnavcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></li>
+                  <!-- #NEXT -->
+                  </ul>
+                </li>         
+            
+                <!-- #ELSE -->
+            
+                    <!-- #IF {{categories.featured}} -->
+        
+                    <li id="navcategory-{{navcategory.slug}}" class="navcategory featured"><a title="{{navcategory.name | html_encode}}" href="{{navcategory.url}}">{{navcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></li>
+                    
+                    <!-- #ELSE -->
+                    
+                    <li id="navcategory-{{navcategory.slug}}" class="navcategory"><a title="{{navcategory.name | html_encode}}" href="{{navcategory.url}}">{{navcategory.name | html_encode}}</a> <!-- #IF {{store.loggedin}} --><a class="store-edit" href="{{navcategory.editurl}}">(Edit)</a><!-- #ENDIF --></li>
+        
+                    <!-- #ENDIF -->
+        
+            
+                <!-- #ENDIF -->
+            
+            
         
         <!-- #NEXT -->
         </ul>
@@ -134,7 +147,6 @@
 
     <div class="clearfix"></div>
     </aside>
-
 
 
 <!-- #ENDBLOCK -->
