@@ -73,6 +73,7 @@
                         <td class="price">{{cartitem.price | money}}</td>
                         <td class="qty">
                             <input class="qty" type="number" size="4" name="quantity" value="{{cartitem.quantity}}" onfocus="this.select();" />
+                            <input type="hidden" name="cartitem" value="{{cartitem.id}}" />
                         </td>
                         <td class="remove">
                             <button type="button" name="cartitem" value="{{cartitem.id}}"  class="button remove" title="Remove - {{cartitem.name | html_encode}}">Remove</button>
