@@ -4,7 +4,7 @@
 
     <!--
         CartChing Theme / Tiger
-        Copyright (c) CartChing, 2012 | http://cartching.com
+        Copyright (c) CartChing, {{now.year}} | http://cartching.com
     -->
 
     <!-- #BLOCK name="page_title" --><title>{{page.title | html_encode}} | {{store | html_encode}}</title><!-- #ENDBLOCK -->
@@ -27,19 +27,17 @@
     
     <link rel="canonical" href="{{page.url}}" />
     <link rel="home" title="home" href="{{store.url}}" />
-    <link rel="shortcut icon" href="/themes/tiger/files/favicon.ico" />
-    
-    <link rel="stylesheet" media="all" href="/themes/tiger/files/theme.css" />
-    <!-- <link rel="stylesheet" media="all" href="{{theme.files}}/theme.css?t=v1" /> -->
-    <link rel="stylesheet" media="all" href="/files/custom.css" />
+    <link rel="shortcut icon" href="{{theme.files}}/favicon.ico" />    
+    <link rel="stylesheet" media="all" href="{{theme.files}}/theme.css?t=v1" />
+    <link rel="stylesheet" media="all" href="{{store.files}}/custom.css" />
     <!--[if IE]><link rel="stylesheet" media="screen" href="{{theme.files}}/ie.css" /><![endif]-->
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     <script src="http://cachedcommons.org/cache/modernizr/1.5.0/javascripts/modernizr-min.js"></script>
     <script src="http://cachedcommons.org/cache/html5-enabled/1.0.0/javascripts/html5-enabled-min.js"></script>
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <script type="text/javascript" language="javascript" src="/themes/tiger/files/jquery.sticky.js"></script>
-    <script type="text/javascript" language="javascript" src="/themes/tiger/files/main.js"></script>
+    <script type="text/javascript" language="javascript" src="{{theme.files}}/jquery.sticky.js"></script>
+    <script type="text/javascript" language="javascript" src="{{theme.files}}/main.js"></script>
     
     <!-- #BLOCK name="head_content" --><!-- #ENDBLOCK -->
     
@@ -66,15 +64,14 @@
     
     <!-- #IF {{page.hasmessage}} -->
     <section class="pagemsg" id="pagemsg">
-        <div class="msg {{page.messagetype|lowercase}}">
-    
+        <div class="msg {{page.messagetype|lowercase}}">        	
+    		<div class="details">
             <!-- #IF {{page.hasmessagetitle}} --><h3>{{page.messagetitle}}</h3><!-- #ENDIF -->
             <!-- #IF {{page.hasmessagedetails}} --><p>{{page.messagedetails}}</p><!-- #ENDIF -->
-
+			</div>
             <div class="buttons">
                 <a href="#" class="close" onClick="$('#pagemsg').fadeOut();" title="Click to Close" rel="nofollow">Close</a>
-            </div>
-    
+            </div>    
         </div>
     </section>
     <!-- #ENDIF -->    
