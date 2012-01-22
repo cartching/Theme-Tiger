@@ -23,8 +23,8 @@
 <!-- #BLOCK for="page_type" --><meta property="og:type" content="product" /><!-- #ENDBLOCK -->
 <!-- #BLOCK for="head_content" --><link rel="stylesheet" type="text/css" href="http://static.store-cdn.com/themes/library/jquery/shadowbox/shadowbox.css" /><!-- #ENDBLOCK -->
 
-
 <!-- #BLOCK for="content_area" -->
+
 
     <article class="product">
 
@@ -280,7 +280,10 @@
         <section class="product-description html">{{product.description}}</section>
         <!-- #ENDIF -->    
 
-        <!-- Product Reviews -->
+        <!-- Facebook Comments -->
+        <div class="clearfix"></div>
+        <hr />
+		<div class="fb-comments" data-href="{{product.url}}" data-num-posts="10" data-width="640"></div>
         
         <!-- Product Featured -->    
 
@@ -291,7 +294,9 @@
 
 
 
-<!-- #BLOCK for="script_content" -->
+<!-- #BLOCK for="script_content" --> 
+<div id="fb-root"></div>
+
 <script src="http://static.store-cdn.com/themes/library/jquery/shadowbox/shadowbox.js"></script>
 <script type="text/javascript">
 
@@ -301,15 +306,25 @@ Shadowbox.init();
 $(function() {
 	
 	// Change Stock Value to Text Description
-	$(".stockqty").stockify();
-
-	$("#gallery a").shadowbox({
+	$(".stockqty").stockify({});
+	
+	$("ul#gallery a").shadowbox({
 		overlayOpacity:	0.9,
-		gallery:        "#gallery a",
+		gallery:        "ul#gallery a",
 		continuous:     true
 		// counterType:    "skip"
 	});
 
 });
+
+
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
 </script>
 <!-- #ENDBLOCK -->
