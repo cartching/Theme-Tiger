@@ -112,7 +112,7 @@ input[type="email"],
 input[type="url"],
 input[type="password"],
 input[type="number"],
-textarea { margin-bottom:5px; padding:0.3em 0.4em; border:1px solid #a0a0a0; border-radius:0.25em; }
+textarea { margin-bottom:5px; padding:0.35em 0.45em; border:1px solid #a0a0a0; border-radius:0.25em; font-size:11pt; }
 
 form fieldset { border:1px solid #eee; border-radius:3px; padding:10px; margin-bottom:1.25em; }
 form fieldset legend { font-size:1.4em; padding:0 5px; }
@@ -569,7 +569,10 @@ body.product .product .price { display: block; margin:0 0 10px 0; padding:20px 0
 .cartitems td { padding:12px 6px; }
 .cartitems thead th { padding:2px 6px; border-top:solid 1px #ddd; border-bottom:solid 1px #ddd; border-left:0; }
 .cartitems tbody td { border-bottom:solid 1px #eee; border-left:none; }
-.cartitems tfoot td { text-align:right; border:none; }
+
+.cartitems tfoot td.coupon { border:none; }
+.cartitems tfoot td.update { text-align:right; border:none; }
+
 .cartitems thead th.money,
 .cartitems tbody td.money,
 .cartitems tfoot td.money { text-align:right; }
@@ -579,12 +582,28 @@ body.product .product .price { display: block; margin:0 0 10px 0; padding:20px 0
 .cartitems th.remove,
 .cartitems th.money { width:100px; }
 .cartitems th.qty { width:60px; }
-.cartitems tfoot td { padding:2px 6px; }
+
+.cartitems tfoot td { padding:2px 6px; border:none; }
 .cartitems tfoot tr.update td { padding:20px 0; }
-.cartitems tfoot tr.subtotal td { padding-top:12px; }
+
+.cartitems tfoot tr.subtotal td,
+.cartitems tfoot tr.shipping td,
+.cartitems tfoot tr.discount td,
+.cartitems tfoot tr.total td,
+.cartitems tfoot tr.tax td { text-align:right; }
+
+.cartitems tfoot tr.subtotal td { padding-top:12px; text-align:right; }
+
 .cartitems tfoot tr.total td { padding-top:8px; padding-bottom:8px; font-weight:bold; font-size:1.05em; }
 .cartitems tfoot tr.total .money { border-top:1px solid #eee; border-bottom:1px solid #bbb; }
 .cartitems button.remove { margin-top:0; font-size: 0.8em; padding:5px 15px 3px; }
+
+.cartitems tfoot td.coupon fieldset { border:none; border-radius:none; padding:0; margin-bottom:0; }
+.cartitems tfoot td.coupon fieldset legend { display:none; }
+.cartitems tfoot td.coupon fieldset ul { margin:0; padding:0; }
+.cartitems tfoot td.coupon fieldset li { padding:0; list-style:none; display:inline-block; float:left; }
+.cartitems tfoot td.coupon fieldset li label { display:inline; }
+.cartitems tfoot td.coupon fieldset .submit .updatecart { margin-top:0; margin-left:15px; }
 
 
 /* //////////////////////////////////////////////////////////////////////

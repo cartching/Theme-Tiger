@@ -85,8 +85,21 @@
                 <tfoot>
                 
                     <tr class="update">
-                        <td colspan="4">&nbsp;</td>
-                        <td colspan="2">
+                        <td colspan="4" class="coupon">
+                        
+                            <fieldset>
+                                <legend>Discount Coupon</legend>
+                                <ul>
+                                    <li>
+                                        <label>Coupon Code</label>
+                                        <input type="text" name="coupon" value="" maxlength="20" class="text" title="Coupon Code" />
+                                    </li>
+                                    <li class="submit"><button type="submit" class="button updatecart" title="Get your Discount">Get</button></li>
+                                </ul>
+                            </fieldset>               
+                        
+                        </td>
+                        <td colspan="2" class="update">
                         
                         <button type="submit" value="Update"  class="button update" title="Update">Update</button>
                         
@@ -128,7 +141,7 @@
                     <!-- #ENDIF -->                                        
 
                     <!-- #IF {{cart.coupon}} -->
-                    <tr class="coupon">
+                    <tr class="discount">
                       <td colspan="5"><em>{{cart.coupon.name}}</em> | Discount <strong>({{cart.discount.percentage}}%)</strong></td>
                       <td class="money">{{cart.discount.amount | money}}</td>
                     </tr>
